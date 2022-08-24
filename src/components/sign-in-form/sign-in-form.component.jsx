@@ -18,6 +18,7 @@ const defaultFormFields = {
 
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const { email, password } = formFields;
 
   const resetFormFields = () => {
@@ -32,6 +33,8 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setButtonDisabled(true)
+
     try {
       const response = await signInAuthUserWithEmailAndPassword(
         email,
@@ -39,6 +42,7 @@ const SignInForm = () => {
       );
       console.log(response);
       resetFormFields();
+      setButtonDisabled(false)
     } catch (error) {
       switch (error.code) {
         case 'auth/wrong-password':
@@ -50,6 +54,7 @@ const SignInForm = () => {
         default:
           console.log(error);
       }
+      setButtonDisabled(false)
     }
   };
 
@@ -82,7 +87,7 @@ const SignInForm = () => {
           value={password}
         />
         <div className='buttons-container'>
-          <Button type='submit'>Sign In</Button>
+          <Button type='submit'>{!buttonDisabled ? 'Sign In' : 'Signing In ...'}</Button>
           <Button type='button' buttonType='google' onClick={signInWithGoogle}>
             Google sign in
           </Button>

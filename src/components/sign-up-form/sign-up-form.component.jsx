@@ -19,6 +19,7 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const { displayName, email, password, confirmPassword } = formFields;
 
   const resetFormFields = () => {
@@ -27,6 +28,8 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setButtonDisabled(true)
 
     if (password !== confirmPassword) {
       alert('passwords do not match');
@@ -41,12 +44,14 @@ const SignUpForm = () => {
 
       await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
+      setButtonDisabled(false)
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         alert('Cannot create user, email already in use');
       } else {
         console.log('user creation encountered an error', error);
       }
+      setButtonDisabled(false)
     }
   };
 
@@ -96,7 +101,7 @@ const SignUpForm = () => {
           name='confirmPassword'
           value={confirmPassword}
         />
-        <Button type='submit'>Sign Up</Button>
+        <Button type= 'submit' buttonType={!buttonDisabled ? '' : 'inverted'} disabled = {buttonDisabled}>{!buttonDisabled ? 'Sign Up' : 'Signing up ...'}</Button>
       </form>
     </div>
   );
