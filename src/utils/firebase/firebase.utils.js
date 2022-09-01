@@ -14,7 +14,11 @@ import {
   getFirestore, 
   doc, 
   getDoc, 
-  setDoc 
+  setDoc,
+  writeBatch,
+  collection,
+  query,
+  getDocs,
 } from 'firebase/firestore';
 
 
@@ -39,6 +43,41 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 
 export const db = getFirestore();
+
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const batch = writeBatch(db);
+  //const collectionRef = collection(db, collectionKey);
+  
+  objectsToAdd.forEach((object) => {
+     const docRef = doc(db, collectionKey, object.title.toLowerCase());
+     batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+};
+
+
+export const getCategoriesAndDocuments = async () => {
+
+  const collectionRef = collection(db, 'categories')
+  const q = query(collectionRef)
+
+  const querySnapshot = await getDocs(q)
+
+  const categoryMap = querySnapshot.docs.reduce((acc,docSnapshot) => {
+    const { title, items } = docSnapshot.data()
+    acc[title.toLowerCase()] = items
+    return acc
+  })
+
+  return categoryMap
+
+}
 
 export const createUserDocumentFromAuth = async (userAuth, otherDetails) => {
   const userDocRef = doc(db, 'users', userAuth.uid);

@@ -24,7 +24,7 @@ root.render(
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
-  rootElement
+  //rootElement
 );
 
 // If you want to start measuring performance in your app, pass a function
