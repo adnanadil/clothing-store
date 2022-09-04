@@ -73,7 +73,7 @@ export const getCategoriesAndDocuments = async () => {
     const { title, items } = docSnapshot.data()
     acc[title.toLowerCase()] = items
     return acc
-  })
+  }, {})
 
   return categoryMap
 
