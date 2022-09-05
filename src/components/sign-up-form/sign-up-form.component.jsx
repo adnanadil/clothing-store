@@ -1,14 +1,17 @@
 import { useState } from 'react';
 
 import FormInput from '../form-input/form-input.component';
-import Button from '../button/button.component';
 
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils';
 
-import './sign-up-form.styles.scss';
+import './sign-up-form.styles.jsx';
+
+import Button, {BUTTON_TYPE_CLASSES } from '../button/button.component';
+
+import { SignUpContainer } from './sign-up-form.styles';
 
 const defaultFormFields = {
   displayName: '',
@@ -62,7 +65,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className='sign-up-container'>
+    <SignUpContainer>
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -101,9 +104,9 @@ const SignUpForm = () => {
           name='confirmPassword'
           value={confirmPassword}
         />
-        <Button type= 'submit' buttonType={!buttonDisabled ? '' : 'inverted'} disabled = {buttonDisabled}>{!buttonDisabled ? 'Sign Up' : 'Signing up ...'}</Button>
+        <Button type= 'submit' buttonType={!buttonDisabled ? BUTTON_TYPE_CLASSES.base : BUTTON_TYPE_CLASSES.inverted} disabled = {buttonDisabled}>{!buttonDisabled ? 'Sign Up' : 'Signing up ...'}</Button>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 
