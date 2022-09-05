@@ -38,7 +38,9 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 const clearCartItem = (cartItems, cartItemToClear) =>
   cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
 
+
 export const CartContext = createContext({
+  // This decleration is not that important you can skip it
   isCartOpen: false,
   setIsCartOpen: () => {},
   cartItems: [],
