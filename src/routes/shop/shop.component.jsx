@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import CategoriesPreview from '../categories-preview/categories-preview.component';
 import Category from '../category/category.component';
-import { fetchCategoriesStartAsync } from '../../store/categories/category.action';
+import { fetchCategoriesStartAsync } from '../../store/categories/categories-slice';
 
 const Shop = () => {
   const dispatch = useDispatch();
